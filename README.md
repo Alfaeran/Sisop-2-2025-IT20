@@ -1687,4 +1687,30 @@ return 0;
 }
 ```
 Penjelasan code
-./debugmon
+Perintah ini: **./debugmon list <user>** akan menampilkan daftar semua proses milik user tersebut (PID, command, CPU, dan memori)
+              **./debugmon daemon <user>** program akan berjalan di latar belakang (daemon) dan mencatat aktivitas proses ke debugmon.log
+                *tail -f debugmon.log* untuk melihat proses yang sedang berlangsung
+              **./debugmon stop <user>** akan menghentikan mode daemon
+              **./debugmon fail <user>** semua proses user akan dimatikan dan user tidak bisa menjalankan proses baru dan ini akan dicatat di log sebagai FAILED
+              **./debugmon revert <user>** menghapus status blokir agar user bisa menjalankan proses lagi dan akan dicatat di log sebagai RUNNING
+              **cat debugmon.log** untuk melihat semua proses yang dijalankan
+
+# REVISI
+pada fitur d. Menggagalkan semua proses user yang sedang berjalan dengan mengetik *./debugmon fail <user>* tidak tercatat ke dalam log (debugmon.log) sebagai **FAILED** karena ada kemungkinan semua proses milik user telah di-kill duluan sebelum sempat mencatat statusnya. Maka solusi pada masalah ini sebelumnya dengan menambahkan perintah sleep 2 sebelum fail agar memberi waktu pada debugmon untuk mencatat aktivitas user ke log sebelum proses benar-benar dimatikan.
+**revisi pada code** 
+```
+if (uid == target_uid) {
+    pid_t pid = atoi(entry->d_name);
+    kill(pid, SIGKILL);
+    write_log(name, "FAILED");
+}
+
+//membalik urutan dengan menulis write_log terlebih dahulu sebelum kill
+
+if (uid == target_uid) {
+pid_t pid = atoi(entry->d_name);
+write_log(name, "FAILED");
+kill(pid, SIGKILL);
+}
+```
+dengan membalik urutannya write_log sempat mencatat nama proses dan statusnya, setelah itu baru proses di-kill dengan SIGKILL
