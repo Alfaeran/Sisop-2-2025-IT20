@@ -486,7 +486,7 @@ void download_and_extract_zip() {
 # 💀 Malware dokrodokrodok: Daemon, Infeksi, Fork Bomb & Mining
 
 ## Deskripsi
-Program ini merupakan simulasi malware daemon yang memiliki berbagai fitur berbahaya seperti:
+Program ini merupakan simulasi malware daemon yang memiliki berbagai fitur berbahaya💀 seperti:
 - Menyamar sebagai proses `/init`
 - Mengenkripsi folder menggunakan ZIP dan XOR (`wannacryptor`)
 - Menyebar ke seluruh subdirektori di `$HOME` (`trojan.wrm`)
