@@ -1318,7 +1318,9 @@ void child_rodok(int argc, char **argv) {
             if (miner == 0) {
                 mine_crafter(i);
                 exit(EXIT_SUCCESS); 
-            }
+            }else {
+                waitpid(miner, NULL , 0);
+                }
         }
 
         while (1) {
