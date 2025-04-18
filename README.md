@@ -1353,13 +1353,13 @@ int main(int argc, char *argv[]) {
 ```
   
 # Soal 4
-Membuat program Debugmon yang bisa 
-a. Menampilkan proses milik user
-b. Menjalankan daemon untuk memonitor proses tersebut
-c. Memblokir (kill) semua proses milik user
-d. Mengizinkan user kembali menjalankan proses
-e. Menghentikan daemon
-f. Melakukan pencatatan dan penyimpanan ke dalam file debugmon.log
+Membuat program Debugmon yang bisa:
+- a. Menampilkan proses milik user
+- b. Menjalankan daemon untuk memonitor proses tersebut
+- c. Memblokir (kill) semua proses milik user
+- d. Mengizinkan user kembali menjalankan proses
+- e. Menghentikan daemon
+- f. Melakukan pencatatan dan penyimpanan ke dalam file debugmon.log
 ```
 #include <stdio.h>
 #include <stdlib.h>
@@ -1687,22 +1687,22 @@ return 0;
 }
 ```
 Penjelasan code
-Perintah ini: **./debugmon list <user>** akan menampilkan daftar semua proses milik user tersebut (PID, command, CPU, dan memori)
-              **./debugmon daemon <user>** program akan berjalan di latar belakang (daemon) dan mencatat aktivitas proses ke debugmon.log
-                *tail -f debugmon.log* untuk melihat proses yang sedang berlangsung
-              **./debugmon stop <user>** akan menghentikan mode daemon
-              **./debugmon fail <user>** semua proses user akan dimatikan dan user tidak bisa menjalankan proses baru dan ini akan dicatat di log sebagai FAILED
-              **./debugmon revert <user>** menghapus status blokir agar user bisa menjalankan proses lagi dan akan dicatat di log sebagai RUNNING
-              **cat debugmon.log** untuk melihat semua proses yang dijalankan
+Perintah ini:
+- **./debugmon list <user>** akan menampilkan daftar semua proses milik user tersebut (PID, command, CPU, dan memori)
+- **./debugmon daemon <user>** program akan berjalan di latar belakang (daemon) dan mencatat aktivitas proses ke debugmon.log (*tail -f debugmon.log* untuk melihat proses yang sedang berlangsung)
+- **./debugmon stop <user>** akan menghentikan mode daemon
+- **./debugmon fail <user>** semua proses user akan dimatikan dan user tidak bisa menjalankan proses baru dan ini akan dicatat di log sebagai FAILED
+- **./debugmon revert <user>** menghapus status blokir agar user bisa menjalankan proses lagi dan akan dicatat di log sebagai RUNNING
+- **cat debugmon.log** untuk melihat semua proses yang dijalankan
 
 # REVISI
-pada fitur d. Menggagalkan semua proses user yang sedang berjalan dengan mengetik *./debugmon fail <user>* tidak tercatat ke dalam log (debugmon.log) sebagai **FAILED** karena ada kemungkinan semua proses milik user telah di-kill duluan sebelum sempat mencatat statusnya. Maka solusi pada masalah ini sebelumnya dengan menambahkan perintah sleep 2 sebelum fail agar memberi waktu pada debugmon untuk mencatat aktivitas user ke log sebelum proses benar-benar dimatikan.
-**revisi pada code** 
+pada fitur **d.** Menggagalkan semua proses user yang sedang berjalan dengan mengetik   *./debugmon fail <user>*   tidak tercatat ke dalam log (debugmon.log) sebagai **FAILED** karena ada kemungkinan semua proses milik user telah di-kill duluan sebelum sempat mencatat statusnya. Maka solusi pada masalah ini sebelumnya dengan menambahkan perintah sleep 2 sebelum fail agar memberi waktu pada debugmon untuk mencatat aktivitas user ke log sebelum proses benar-benar dimatikan.
+- **revisi pada code** 
 ```
 if (uid == target_uid) {
-    pid_t pid = atoi(entry->d_name);
-    kill(pid, SIGKILL);
-    write_log(name, "FAILED");
+pid_t pid = atoi(entry->d_name);
+kill(pid, SIGKILL);
+write_log(name, "FAILED");
 }
 
 //membalik urutan dengan menulis write_log terlebih dahulu sebelum kill
