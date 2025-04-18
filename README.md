@@ -1686,13 +1686,12 @@ show_menu();
 return 0;
 }
 ```
-Penjelasan code
-Perintah ini:
-- **./debugmon list <user>** akan menampilkan daftar semua proses milik user tersebut (PID, command, CPU, dan memori)
-- **./debugmon daemon <user>** program akan berjalan di latar belakang (daemon) dan mencatat aktivitas proses ke debugmon.log (*tail -f debugmon.log* untuk melihat proses yang sedang berlangsung)
-- **./debugmon stop <user>** akan menghentikan mode daemon
-- **./debugmon fail <user>** semua proses user akan dimatikan dan user tidak bisa menjalankan proses baru dan ini akan dicatat di log sebagai FAILED
-- **./debugmon revert <user>** menghapus status blokir agar user bisa menjalankan proses lagi dan akan dicatat di log sebagai RUNNING
+Penjelasan code, perintah ini:
+- **./debugmon list user** akan menampilkan daftar semua proses milik user tersebut (PID, command, CPU, dan memori)
+- **./debugmon daemon user** program akan berjalan di latar belakang (daemon) dan mencatat aktivitas proses ke debugmon.log  (*tail -f debugmon.log* untuk melihat proses yang sedang berlangsung)
+- **./debugmon stop user** akan menghentikan mode daemon
+- **./debugmon fail user** semua proses user akan dimatikan dan user tidak bisa menjalankan proses baru dan ini akan dicatat di log sebagai FAILED
+- **./debugmon revert user** menghapus status blokir agar user bisa menjalankan proses lagi dan akan dicatat di log sebagai RUNNING
 - **cat debugmon.log** untuk melihat semua proses yang dijalankan
 
 # REVISI
